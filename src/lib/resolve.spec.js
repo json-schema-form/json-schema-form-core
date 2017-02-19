@@ -79,13 +79,23 @@ describe('resolve.js', () => {
     }
   };
 
+  const remote = {
+    "id": "http://some.site.somewhere/entry-schema#",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "test remote schema resolution",
+    "type": "object",
+    "properties": {
+      "relative": { "$ref": "https://raw.githubusercontent.com/json-schema-org/json-schema-org.github.io/master/geo" }
+    }
+  };
+
   it('should contain a function for resolving relative & local references', () => {
     jsonref.should.be.an('function');
   })
 
   describe('jsonref', () => {
 
-    it('should resolve json-ref via promise', (done) => {
+    it('should resolve relative json-ref via promise', (done) => {
       jsonref(schema)
         .then((resolved) => {
           resolved.properties.storage.oneOf[0].properties.should.have.property('device');
@@ -102,10 +112,19 @@ describe('resolve.js', () => {
         });
     });
 
-    it('should resolve json-ref via callback', (done) => {
+    it('should resolve relative json-ref via callback', (done) => {
       jsonref(schema, function(error, resolved) {
         if (error) done(error);
         resolved.properties.storage.oneOf[0].properties.should.have.property('device');
+        done();
+      });
+    });
+
+    //I believe this only fails in phantomjs due to https://github.com/ariya/phantomjs/issues/11195
+    it('should resolve remote json-ref via callback', (done) => {
+      jsonref(remote, function(error, resolved) {
+        if (error) done(error);
+        //resolved.properties.relative.latitude.type.should.equal('number');
         done();
       });
     });

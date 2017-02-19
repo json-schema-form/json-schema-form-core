@@ -1,13 +1,13 @@
-import * as JsonRefs from './../../lib/json-refs-standalone-min';
+import * as JsonRefs from './../../lib/json-refs-standalone';
 
 export function jsonref(schema, callBack) {
   let promise = new Promise(
     function(resolve, reject) {
       JsonRefs.resolveRefs(schema, {
-        "filter": [ 'relative', 'local' ]
+        "filter": [ 'relative', 'local', 'remote' ]
       })
-        .then(function(res) { resolve(res.resolved); })
-        .catch(function(err) { reject(new Error(err)); });
+        .then((res) => { resolve(res.resolved); })
+        .catch((err) => { reject(new Error(err)); });
     }
   );
 
