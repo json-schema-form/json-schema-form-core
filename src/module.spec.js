@@ -7,7 +7,8 @@ import {
   validate,
   sfPath,
   schemaDefaults,
-  canonicalTitleMap
+  canonicalTitleMap,
+  jsonref
 } from './module';
 
 chai.should();
@@ -22,5 +23,6 @@ describe('module.js', () => {
     sfPath.should.be.an('object');
     schemaDefaults.should.be.an('object');
     canonicalTitleMap.should.be.an('function');
+    jsonref.should.be.an('function');
   });
 });

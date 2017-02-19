@@ -1,0 +1,26 @@
+{
+  "name": "json-schema-form-core",
+  "main": "dist/json-schema-form-core.js",
+  "maintainers": [
+    "Marcel J Bennett <iamanthropic@gmail.com>"
+  ],
+  "description": "json-schema-form-core",
+  "keywords": [
+    "json",
+    "json-schema",
+    "schema",
+    "json-schema-form"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "index.js",
+    "package.json",
+    "docs"
+  ],
+  "devDependencies": {
+    "json-refs": "2.1.6"
+  }
+}
