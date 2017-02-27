@@ -111,8 +111,14 @@ export function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
 
     // Special case: checkbox
     // Since have to ternary state we need a default
-    if (obj.type === 'checkbox' && obj.schema['default'] === undefined) {
-      obj.schema['default'] = false;
+    if (obj.type === 'checkbox') {
+      // Check for schema property, as the checkbox may be part of the explicitly defined form
+      if (obj.schema === undefined) {
+        obj.schema = { default: false };
+      }
+      else if (obj.schema['default'] === undefined) {
+        obj.schema['default'] = false;
+      };
     };
 
     // Special case: template type with tempplateUrl that's needs to be loaded before rendering
@@ -120,7 +126,7 @@ export function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
     // is introduced since we need to go async then anyway
     if (asyncTemplates && obj.type === 'template' && !obj.template && obj.templateUrl) {
       asyncTemplates.push(obj);
-    }
+    };
 
     return obj;
   });

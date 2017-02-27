@@ -1,7 +1,7 @@
 /*!
  * json-schema-form-core
  * @version 1.0.0-alpha.2
- * @date Sun, 19 Feb 2017 13:06:51 GMT
+ * @date Mon, 27 Feb 2017 11:25:51 GMT
  * @link https://github.com/json-schema-form/json-schema-form-core
  * @license MIT
  * Copyright (c) 2014-2017 JSON Schema Form
@@ -2260,9 +2260,14 @@ function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
 
     // Special case: checkbox
     // Since have to ternary state we need a default
-    if (obj.type === 'checkbox' && obj.schema['default'] === undefined) {
-      obj.schema['default'] = false;
-    };
+    if (obj.type === 'checkbox') {
+      // Check for schema property, as the checkbox may be part of the explicitly defined form
+      if (obj.schema === undefined) {
+        obj.schema = { default: false };
+      } else if (obj.schema['default'] === undefined) {
+        obj.schema['default'] = false;
+      }
+    }
 
     // Special case: template type with tempplateUrl that's needs to be loaded before rendering
     // TODO: this is not a clean solution. Maybe something cleaner can be made when $ref support
