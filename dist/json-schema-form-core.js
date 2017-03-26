@@ -1,7 +1,7 @@
 /*!
  * json-schema-form-core
- * @version 1.0.0-alpha.2
- * @date Mon, 27 Feb 2017 11:25:51 GMT
+ * @version 1.0.0-alpha.3
+ * @date Mon, 13 Mar 2017 05:23:37 GMT
  * @link https://github.com/json-schema-form/json-schema-form-core
  * @license MIT
  * Copyright (c) 2014-2017 JSON Schema Form
@@ -2266,15 +2266,15 @@ function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
         obj.schema = { default: false };
       } else if (obj.schema['default'] === undefined) {
         obj.schema['default'] = false;
-      }
-    }
+      };
+    };
 
     // Special case: template type with tempplateUrl that's needs to be loaded before rendering
     // TODO: this is not a clean solution. Maybe something cleaner can be made when $ref support
     // is introduced since we need to go async then anyway
     if (asyncTemplates && obj.type === 'template' && !obj.template && obj.templateUrl) {
       asyncTemplates.push(obj);
-    }
+    };
 
     return obj;
   });
