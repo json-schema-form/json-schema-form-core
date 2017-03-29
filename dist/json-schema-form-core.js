@@ -1,7 +1,7 @@
 /*!
  * json-schema-form-core
  * @version 1.0.0-alpha.3
- * @date Mon, 13 Mar 2017 05:23:37 GMT
+ * @date Mon, 27 Mar 2017 13:05:31 GMT
  * @link https://github.com/json-schema-form/json-schema-form-core
  * @license MIT
  * Copyright (c) 2014-2017 JSON Schema Form
@@ -2151,7 +2151,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 // export function merge(schema, form, schemaDefaultTypes, ignore, options, readonly, asyncTemplates) {
-function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
+function merge(lookup, form) {
+  var typeDefaults = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__schema_defaults__["createDefaults"])();
+  var ignore = arguments[3];
+  var options = arguments[4];
+  var readonly = arguments[5];
+  var asyncTemplates = arguments[6];
+
   var formItems = [];
   var formItemRest = [];
   form = form || [];
@@ -2162,7 +2168,7 @@ function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
   var idxRest = form.indexOf('...');
   if ((typeof lookup === 'undefined' ? 'undefined' : _typeof(lookup)) === 'object' && lookup.hasOwnProperty('properties')) {
     readonly = readonly || lookup.readonly || lookup.readOnly;
-    stdForm = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__schema_defaults__["defaultForm"])(lookup, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__schema_defaults__["createDefaults"])(), ignore, options);
+    stdForm = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__schema_defaults__["defaultForm"])(lookup, typeDefaults, ignore, options);
 
     var defaultFormLookup = stdForm.lookup;
 
@@ -2246,14 +2252,14 @@ function merge(lookup, form, ignore, options, readonly, asyncTemplates) {
 
     // if it's a type with items, merge 'em!
     if (obj.items) {
-      obj.items = merge(lookup, obj.items, ignore, options, obj.readonly, asyncTemplates);
+      obj.items = merge(lookup, obj.items, typeDefaults, ignore, options, obj.readonly, asyncTemplates);
     }
 
     // if its has tabs, merge them also!
     if (obj.tabs) {
       obj.tabs.forEach(function (tab) {
         if (tab.items) {
-          tab.items = merge(lookup, tab.items, ignore, options, obj.readonly, asyncTemplates);
+          tab.items = merge(lookup, tab.items, typeDefaults, ignore, options, obj.readonly, asyncTemplates);
         }
       });
     }
