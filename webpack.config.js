@@ -64,8 +64,5 @@ module.exports = {
     ]
   },
   devtool: 'source-map',
-  externals: {
-    'tv4': 'var tv4',
-  },
   plugins: plugins
 };
