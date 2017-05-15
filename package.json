@@ -38,9 +38,6 @@
     "json-ui-schema",
     "json-schema"
   ],
-  "dependencies": {
-    "tv4": "^1.2.7"
-  },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.33",
@@ -74,6 +71,7 @@
     "tslint": "^4.0.2",
     "tslint-loader": "^3.2.1",
     "typescript": "~2.0.3",
+    "tv4": "^1.2.7"
     "webpack": "^2.2.1"
   }
 }
