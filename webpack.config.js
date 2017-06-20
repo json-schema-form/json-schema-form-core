@@ -19,7 +19,7 @@ const plugins = [
       minimize: true
     })
 ];
-let library = 'JSONSchemaFormCore';
+const library = 'JSONSchemaFormCore';
 
 module.exports = {
   entry: {
