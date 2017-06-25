@@ -161,17 +161,55 @@ describe('merge.js', () => {
 
       var merged = merge(subschema, [{key: 'sub', readonly: true}]);
 
-      //sub
+      // sub
       merged[0].should.have.property('readonly');
       merged[0].readonly.should.eq(true);
 
-      //array
+      // array
       merged[0].items[0].should.have.property('readonly');
       merged[0].items[0].readonly.should.eq(true);
 
-      //array items
+      // array items
       merged[0].items[0].items[0].should.have.property('readonly');
       merged[0].items[0].items[0].readonly.should.eq(true);
+    });
+
+    it('should add x-schema-form properties', () => {
+      let subschema = {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "title": "Comment",
+            "x-schema-form": {
+              "type": "textarea",
+              "placeholder": "Don't hold back"
+            }
+          }
+        }
+      };
+
+      var merged = merge(subschema, [ '*' ]);
+
+      merged.should.deep.eq(
+        [
+          {
+            "title": "Comment",
+            "schema": {
+              "type": "string",
+              "title":"Comment",
+              "x-schema-form": {
+                "type": "textarea",
+                "placeholder": "Don't hold back"
+              }
+            },
+            "ngModelOptions": {},
+            "key": [ "comment" ],
+            "type": "textarea",
+            "placeholder": "Don't hold back"
+          }
+        ]
+      )
     });
   });
 });
