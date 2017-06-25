@@ -1,7 +1,7 @@
 /*!
  * json-schema-form-core
- * @version 1.0.0-alpha.4
- * @date Sat, 15 Apr 2017 08:25:55 GMT
+ * @version 1.0.0-alpha.5
+ * @date Sat, 24 Jun 2017 14:16:26 GMT
  * @link https://github.com/json-schema-form/json-schema-form-core
  * @license MIT
  * Copyright (c) 2014-2017 JSON Schema Form
