@@ -7,6 +7,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "dist-untested": "webpack --config webpack.config.dist.js",
+    "lint": "eslint src/**/*.js",
     "tslint": "tslint \"src/**/*.ts\"",
     "test": "mocha --opts .mocha",
     "testdoc": "mocha --opts .mocha && mocha --opts .mocha.md > docs/test.md"
@@ -38,6 +39,9 @@
     "json-ui-schema",
     "json-schema"
   ],
+  "dependencies": {
+    "tv4": "^1.2.7"
+  },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.33",
