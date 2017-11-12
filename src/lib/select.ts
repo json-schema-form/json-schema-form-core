@@ -18,10 +18,10 @@ const numRe = /^\d+$/;
   * @returns {Any|undefined} returns the value at the end of the projection path
   *                          or undefined if there is none.
   */
-export function select(projection, obj, valueToSet) {
-  if (!obj) {
-    obj = this;
-  };
+export function select(projection: string, obj?: object, valueToSet?: any) {
+  // if (!obj) {
+  //   obj = this;
+  // };
 
   // Support [] array syntax
   let parts = typeof projection === 'string' ? sfPath.parse(projection) : projection;

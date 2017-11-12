@@ -1,18 +1,31 @@
-import {stringify, parse} from './sf-path';
+import { stringify, parse } from './sf-path';
 import { defaultForm, createDefaults } from './schema-defaults';
 import canonicalTitleMap from './canonical-title-map';
+// import { JsonSchema } from '../json-schema';
+import { JsonSchemaUI } from '../json-schema-ui';
 
 // export function merge(schema, form, schemaDefaultTypes, ignore, options, readonly, asyncTemplates) {
-export function merge(lookup, form, typeDefaults=createDefaults(), ignore, options, readonly, asyncTemplates) {
-  let formItems = [];
-  let formItemRest = [];
-  form  = form || [];
+/**
+ * @name merge
+ */
+export function merge(
+    lookup: JsonSchemaUI,
+    form: Array<JsonSchemaUI|string>,
+    typeDefaults = createDefaults(),
+    ignore: boolean,
+    options: Object,
+    readonly: boolean,
+    asyncTemplates: Array<Object|string>
+  ) {
+  let formItems: Array<Object> = [];
+  let formItemRest: Array<Object> = [];
+  form = form || [];
   let idx = form.indexOf('*');
   options = options || {};
-  let stdForm = {};
+  let stdForm: any = {};
 
   let idxRest = form.indexOf('...');
-  if(typeof lookup === 'object' && lookup.hasOwnProperty('properties')) {
+  if (typeof lookup === 'object' && lookup.hasOwnProperty('properties')) {
     readonly = readonly || lookup.readonly || lookup.readOnly;
     stdForm = defaultForm(lookup, typeDefaults, ignore, options);
 
@@ -26,29 +39,28 @@ export function merge(lookup, form, typeDefaults=createDefaults(), ignore, optio
     form = form.slice(0, idx).concat(formItems).concat(form.slice(idx + 1));
   }
 
-  //simple case, we have a "...", just put the formItemRest there
+  // simple case, we have a "...", just put the formItemRest there
   if (stdForm.form && idxRest !== -1) {
-    let formKeys = form.map(function(obj) {
-      if (typeof obj === 'string'){
-        return obj;
-      }
-      else if (obj.key) {
-        return obj.key;
-      };
-    }).filter(function(element) {
-      return element !== undefined;
-    });
+    let formKeys = form
+      .filter((obj: JsonSchemaUI|string) => {
+        return ((typeof obj === 'string') || (obj.key !== undefined));
+      })
+      .map((obj: JsonSchemaUI|string) => {
+        if (typeof obj === 'string') {
+          return obj;
+        }
+        else {
+          return obj.key;
+        }
+      })
 
     formItemRest = formItemRest.concat(
-      stdForm.form.map(function(obj) {
-        let isInside = formKeys.indexOf(obj.key[0]) !== -1;
-        if (!isInside) {
-          return obj;
-        };
-      })
-      .filter(function(element) {
-        return element !== undefined;
-      })
+      stdForm.form
+        .filter((obj: JsonSchemaUI) => {
+          let isInside = formKeys.indexOf(obj.key[0]) !== -1;
+
+          return !isInside && obj !== undefined;
+        })
     );
   };
 
@@ -58,7 +70,7 @@ export function merge(lookup, form, typeDefaults=createDefaults(), ignore, optio
 
   // ok let's merge!
   // We look at the supplied form and extend it with schema standards
-  return form.map((obj) => {
+  return form.map((obj: JsonSchemaUI) => {
     // handle the shortcut with just a name
     if (typeof obj === 'string') {
       obj = { key: obj };
@@ -102,7 +114,7 @@ export function merge(lookup, form, typeDefaults=createDefaults(), ignore, optio
 
     // if its has tabs, merge them also!
     if (obj.tabs) {
-      obj.tabs.forEach((tab) => {
+      obj.tabs.forEach((tab: JsonSchemaUI) => {
         if (tab.items) {
           tab.items = merge(lookup, tab.items, typeDefaults, ignore, options, obj.readonly, asyncTemplates);
         }

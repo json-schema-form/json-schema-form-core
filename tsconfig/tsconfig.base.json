@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "../dist/src/Core.ts"
+  ]
+}

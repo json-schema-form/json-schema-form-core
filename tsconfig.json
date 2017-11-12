@@ -1,25 +1,45 @@
 {
+  "baseUrl": ".", // This must be specified if "paths" is.
+  "buildOnSave": false,
+  "compileOnSave": false,
   "compilerOptions": {
-    "allowJs": true,
-    "declaration": false,
+    "allowJs": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [ "es6" ],
+    "lib": [
+      "es5",
+      "es2015.iterable",
+      "es2015.collection",
+      "es2015.promise",
+      "dom"
+    ],
     "mapRoot": "./",
-    "module": "commonjs",
-    "moduleResolution": "classic",
+    "module": "es2015",
+    "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "./dist/",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "outDir": "dist/es6",
+    "preserveConstEnums": true,
     "removeComments": false,
     "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
     "target": "es6",
     "typeRoots": [
-      "../node_modules/@types"
-    ]
+      "../node_modules/@types",
+      "./node_modules/@types",
+      "./node_modules/@jsonschema"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@jsonschema/assimilate": [ "../assimilate", "./node_modules/@jsonschema/assimilate" ]
+    }
   },
   "files": [
-    "src/lib/index.ts"
+    "src/core.ts"
   ],
-  "compileOnSave": false,
-  "buildOnSave": false
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  }
 }

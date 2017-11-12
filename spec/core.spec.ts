@@ -1,5 +1,5 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
+/* tslint:disable:quotemark */
+import { should } from 'chai';
 import {
   merge,
   select,
@@ -9,11 +9,11 @@ import {
   schemaDefaults,
   canonicalTitleMap,
   jsonref
-} from './module';
+} from '../dist/package/Core';
 
-chai.should();
+should();
 
-describe('module.js', () => {
+describe('core.js', () => {
   it('should hold all the public functions of the API', () => {
     merge.should.be.an('function');
     select.should.be.an('function');

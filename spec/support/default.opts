@@ -1,0 +1,12 @@
+--require ajv
+--require djv
+--ui bdd
+
+--reporter spec
+
+--check-leaks
+--globals WebSocket,FormData,XDomainRequest,ActiveXObject
+
+--recursive
+--timeout 5000
+spec-js/**/*.spec.js

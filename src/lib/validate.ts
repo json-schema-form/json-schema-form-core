@@ -1,5 +1,4 @@
-/*  Common code for validating a value against its form and schema definition */
-import tv4 from 'tv4';
+import { Validator } from '@jsonschema/assimilate';
 
 /**
  * Validate a value against its form definition and schema.
@@ -7,7 +6,7 @@ import tv4 from 'tv4';
  * coercion is applied.
  *
  * @param {Object} form A merged form definition, i.e. one with a schema.
- * @param {Any} value the value to validate.
+ * @param {any} value the value to validate.
  * @return {Object} a tv4js result object.
  */
 export function validate(form, value) {
@@ -36,8 +35,9 @@ export function validate(form, value) {
   // Version 4 of JSON Schema has the required property not on the
   // property itself but on the wrapping object. Since we like to test
   // only this property we wrap it in a fake object.
-  let wrap = { type: 'object', 'properties': {}, required: undefined};
+  let wrap = { 'type': 'object', 'properties': {}, 'required': undefined };
   let propName = form.key[form.key.length - 1];
+  let key = form.key.join('/');
   wrap.properties[propName] = schema;
 
   if (form.required) {
@@ -49,5 +49,6 @@ export function validate(form, value) {
     valueWrap[propName] = value;
   };
 
-  return tv4.validateResult(valueWrap, wrap);
+  Validator.addSchema(key, wrap);
+  return Validator.test(key, valueWrap);
 };

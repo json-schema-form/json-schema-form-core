@@ -1,6 +1,8 @@
-export { parse } from 'objectpath';
-export { stringify } from 'objectpath';
-export { normalize } from 'objectpath';
+import * as op from 'objectpath';
+// const op = require('objectpath/lib/ObjectPath').ObjectPath;
+export const parse = op.parse;
+export const stringify = op.stringify;
+export const normalize = op.normalize;
 
 /**
  * I am a name formatter function for processing keys into names for classes or Id.

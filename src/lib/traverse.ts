@@ -1,5 +1,5 @@
 /**
- * Traverse a schema, applying a function(schema,path) on every sub schema
+ * I traverse a schema, applying a function(schema,path) on every sub schema
  * i.e. every property of an object.
  */
 export function traverseSchema(schema, fn, path, ignoreArrays) {
@@ -27,6 +27,13 @@ export function traverseSchema(schema, fn, path, ignoreArrays) {
   traverse(schema, fn, path || []);
 }
 
+/**
+ * I traverse a form definition, applying a function(schema,path) on every sub schema
+ * i.e. every property of an object.
+ *
+ * @param {Object} form
+ * @param {Function} fn
+ */
 export function traverseForm(form, fn) {
   fn(form);
   if (form.items) {
