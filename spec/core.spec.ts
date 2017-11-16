@@ -14,7 +14,7 @@ import {
 should();
 
 describe('core.js', () => {
-  it('should hold all the public functions of the API', () => {
+  it('should hold all the public functions of the original API', () => {
     merge.should.be.an('function');
     select.should.be.an('function');
     traverseSchema.should.be.an('function');
@@ -24,5 +24,11 @@ describe('core.js', () => {
     schemaDefaults.should.be.an('object');
     canonicalTitleMap.should.be.an('function');
     jsonref.should.be.an('function');
+  });
+
+  describe('Core API', () => {
+    it('should contain API'/*,
+      () => {}
+    */);
   });
 });

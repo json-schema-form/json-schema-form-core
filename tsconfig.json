@@ -1,5 +1,4 @@
 {
-  "baseUrl": ".", // This must be specified if "paths" is.
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
@@ -31,6 +30,7 @@
       "./node_modules/@types",
       "./node_modules/@jsonschema"
     ],
+    "baseUrl": ".", // This must be specified if "paths" is.
     "paths": {
       "@jsonschema/assimilate": [ "../assimilate", "./node_modules/@jsonschema/assimilate" ]
     }
