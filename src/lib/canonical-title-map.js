@@ -14,6 +14,17 @@ export default function(titleMap: Array<any>, originalEnum?: any) {
       });
     }
     return canonical;
+  } else if (originalEnum) {
+    const canonical = [];
+    return originalEnum.map((value, index) => {
+      if (typeof titleMap[index] === 'string') {
+        return {
+          name: titleMap[index],
+          value,
+        }
+      }
+      return titleMap[index];
+    });
   }
   return titleMap;
 }
