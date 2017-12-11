@@ -36,6 +36,15 @@ describe('canonical-title-map.js', () => {
       result.should.be.deep.equal(titlemap);
     });
 
+    it('should return a titleMap for a enumNames list with enum values', () => {
+      let result = canonicalTitleMap([ 'name', 'firstname', 'phone' ], [ 'n', 'f', 'p' ]);
+      result.should.be.deep.equal([
+        { name: 'name', value: 'n' },
+        { name: 'firstname', value: 'f' },
+        { name: 'phone', value: 'p' },
+      ]);
+    });
+
     it('should return a titleMap for a titleMap object without enum', () => {
       let result = canonicalTitleMap(titlemapObj);
       result.should.be.deep.equal(titlemap);
