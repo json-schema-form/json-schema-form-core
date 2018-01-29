@@ -1,8 +1,7 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { JSONSchemaForm, API } from './api';
+import { should } from 'chai';
+import { JSONSchemaForm, API } from '../dist/package/api';
 
-chai.should();
+should();
 
 describe('api.js', () => {
   it('should hold an API class', () => {

@@ -1,8 +1,8 @@
-import chai from 'chai';
+import { should } from 'chai';
 import { describe, it} from 'mocha';
-import canonicalTitleMap from './canonical-title-map';
+import { canonicalTitleMap } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('canonical-title-map.js', () => {
   it('should hold a normalisation function for enums and titleMaps to generate titleMaps', () => {
@@ -46,12 +46,12 @@ describe('canonical-title-map.js', () => {
       result.should.be.deep.equal(titlemap);
     });
 
-    it('should return a titleMap for a titleMap object with original enum, returning "undefined" name if the enum value is not found', () => {
+    it('should return a titleMap for a titleMap object with original enum else returning "undefined"', () => {
       enumeration.push('Mr Freeze');
       let result = canonicalTitleMap(titlemapObj, enumeration);
       titlemap.push({
-        "name": undefined,
-        "value": "Mr Freeze"
+        'name': undefined,
+        'value': 'Mr Freeze'
       })
       result.should.be.deep.equal(titlemap);
     });

@@ -1,8 +1,7 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { select } from './select';
+import { should } from 'chai';
+import { select } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('select.js', () => {
   const data = {
@@ -51,7 +50,6 @@ describe('select.js', () => {
     });
 
     it('should create any undefined objects or arrays in the path when setting a value', () => {
-      let data = {};
       let value = select('property.array[1].value', data, 'something');
       data.should.be.deep.equal({
         'property': {

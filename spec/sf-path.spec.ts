@@ -1,15 +1,14 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { parse, stringify, normalize, name } from './sf-path';
+import { should } from 'chai';
+import { sfPath } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('sf-path.js', () => {
   it('should hold functions for working with object paths and keys', () => {
-    parse.should.be.an('function');
-    stringify.should.be.an('function');
-    normalize.should.be.an('function');
-    name.should.be.an('function');
+    sfPath.parse.should.be.an('function');
+    sfPath.stringify.should.be.an('function');
+    sfPath.normalize.should.be.an('function');
+    sfPath.name.should.be.an('function');
   });
 
   // describe('parse', () => {

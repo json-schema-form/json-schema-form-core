@@ -1,21 +1,20 @@
 import { stringify, parse } from './sf-path';
 import { defaultForm, createDefaults } from './schema-defaults';
 import canonicalTitleMap from './canonical-title-map';
-// import { JsonSchema } from '../json-schema';
-import { JsonSchemaUI } from '../json-schema-ui';
+import { JSONSchemaUI } from '../json-schema-ui';
 
 // export function merge(schema, form, schemaDefaultTypes, ignore, options, readonly, asyncTemplates) {
 /**
  * @name merge
  */
 export function merge(
-    lookup: JsonSchemaUI,
-    form: Array<JsonSchemaUI|string>,
+    lookup: JSONSchemaUI,
+    form: JSONSchemaUI,
     typeDefaults = createDefaults(),
-    ignore: boolean,
-    options: Object,
-    readonly: boolean,
-    asyncTemplates: Array<Object|string>
+    ignore?: boolean,
+    options?: Object,
+    readonly?: boolean,
+    asyncTemplates?: Array<Object|string>
   ) {
   let formItems: Array<Object> = [];
   let formItemRest: Array<Object> = [];
@@ -42,10 +41,10 @@ export function merge(
   // simple case, we have a "...", just put the formItemRest there
   if (stdForm.form && idxRest !== -1) {
     let formKeys = form
-      .filter((obj: JsonSchemaUI|string) => {
+      .filter((obj: JSONSchemaUI|string) => {
         return ((typeof obj === 'string') || (obj.key !== undefined));
       })
-      .map((obj: JsonSchemaUI|string) => {
+      .map((obj: JSONSchemaUI|string) => {
         if (typeof obj === 'string') {
           return obj;
         }
@@ -56,7 +55,7 @@ export function merge(
 
     formItemRest = formItemRest.concat(
       stdForm.form
-        .filter((obj: JsonSchemaUI) => {
+        .filter((obj: JSONSchemaUI) => {
           let isInside = formKeys.indexOf(obj.key[0]) !== -1;
 
           return !isInside && obj !== undefined;
@@ -70,7 +69,7 @@ export function merge(
 
   // ok let's merge!
   // We look at the supplied form and extend it with schema standards
-  return form.map((obj: JsonSchemaUI) => {
+  return form.map((obj: JSONSchemaUI) => {
     // handle the shortcut with just a name
     if (typeof obj === 'string') {
       obj = { key: obj };
@@ -114,7 +113,7 @@ export function merge(
 
     // if its has tabs, merge them also!
     if (obj.tabs) {
-      obj.tabs.forEach((tab: JsonSchemaUI) => {
+      obj.tabs.forEach((tab: JSONSchemaUI) => {
         if (tab.items) {
           tab.items = merge(lookup, tab.items, typeDefaults, ignore, options, obj.readonly, asyncTemplates);
         }

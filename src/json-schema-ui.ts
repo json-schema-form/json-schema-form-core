@@ -1,172 +1,216 @@
+// Type definitions for json-schema 4.0
+// Project: https://www.npmjs.com/package/json-schema
+// Definitions by: Boris Cherny <https://github.com/bcherny>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 2.2
+
+/// <reference types="node"/>
+
 /**
- * MIT License
- *
- * Copyright (c) 2016 Richard Adams (https://github.com/enriched)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
  */
+export type JSONSchema4TypeName = 'string' | 'number' | 'integer' | 'boolean'
+| 'object' | 'array' | 'null' | 'any'
 
-// Adapted from: https://gist.github.com/enriched/c84a2a99f886654149908091a3183e15
-// with following changes: format attribute added.
+/**
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-04#section-3.5
+*/
+export type JSONSchema4Type = any[] | boolean | number | null | object | string
 
-export interface JsonSchemaUI {
-  $ref?: string;
-  /////////////////////////////////////////////////
-  // Schema Metadata
-  /////////////////////////////////////////////////
-  /**
-   * This is important because it tells refs where
-   * the root of the document is located
-   */
-  id?: string;
-  /**
-   * It is recommended that the meta-schema is
-   * included in the root of any JSON Schema
-   */
-  $schema?: JsonSchemaUI;
-  /**
-   * Title of the schema
-   */
-  title?: string;
-  /**
-   * Title of the schema
-   */
-  key?: string;
-  /**
-   * Schema description
-   */
-  description?: string;
-  /**
-   * Default json for the object represented by
-   * this schema
-   */
-  'default'?: any;
+/**
+* JSON Schema V4
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-04
+*/
+export interface JSONSchema4 {
+id?: string
+$ref?: string
+$schema?: 'http://json-schema.org/schema#' | 'http://json-schema.org/hyper-schema#'
+| 'http://json-schema.org/draft-04/schema#' | 'http://json-schema.org/draft-04/hyper-schema#'
+| 'http://json-schema.org/draft-03/schema#' | 'http://json-schema.org/draft-03/hyper-schema#'
+| string
 
-  /////////////////////////////////////////////////
-  // Number Validation
-  /////////////////////////////////////////////////
-  /**
-   * The value must be a multiple of the number
-   * (e.g. 10 is a multiple of 5)
-   */
-  multipleOf?: number;
-  maximum?: number;
-  /**
-   * If true maximum must be > value, >= otherwise
-   */
-  exclusiveMaximum?: boolean;
-  minimum?: number;
-  /**
-   * If true minimum must be < value, <= otherwise
-   */
-  exclusiveMinimum?: boolean;
+/**
+* This attribute is a string that provides a short description of the
+* instance property.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.21
+*/
+title?: string
 
-  /////////////////////////////////////////////////
-  // String Validation
-  /////////////////////////////////////////////////
-  maxLength?: number;
-  minLength?: number;
-  /**
-   * This is a regex string that the value must
-   * conform to
-   */
-  pattern?: string;
+/**
+* This attribute is a string that provides a full description of the of
+* purpose the instance property.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.22
+*/
+description?: string
 
-  /**
-   * For semantic validation.
-   */
-  format?: string;
+default?: JSONSchema4Type
+multipleOf?: number
+maximum?: number
+exclusiveMaximum?: boolean
+minimum?: number
+exclusiveMinimum?: boolean
+maxLength?: number
+minLength?: number
+pattern?: string
 
-  /////////////////////////////////////////////////
-  // Array Validation
-  /////////////////////////////////////////////////
-  additionalItems?: boolean | JsonSchemaUI;
-  items?: Array<JsonSchemaUI|string>;
-  maxItems?: number;
-  minItems?: number;
-  uniqueItems?: boolean;
-  tabs?: Array<Object>;
-  tab?: JsonSchemaUI;
-  length?: number;
+/**
+* May only be defined when "items" is defined, and is a tuple of JSONSchemas.
+*
+* This provides a definition for additional items in an array instance
+* when tuple definitions of the items is provided.  This can be false
+* to indicate additional items in the array are not allowed, or it can
+* be a schema that defines the schema of the additional items.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.6
+*/
+additionalItems?: boolean | JSONSchema4
 
-  /////////////////////////////////////////////////
-  // Object Validation
-  /////////////////////////////////////////////////
-  maxProperties?: number;
-  minProperties?: number;
-  required?: string[];
-  additionalProperties?: boolean | JsonSchemaUI;
-  /**
-   * Holds simple JSON Schema definitions for
-   * referencing from elsewhere.
-   */
-  definitions?: {[key: string]: JsonSchemaUI};
-  /**
-   * The keys that can exist on the object with the
-   * json schema that should validate their value
-   */
-  properties?: {[property: string]: JsonSchemaUI};
-  /**
-   * The key of this object is a regex for which
-   * properties the schema applies to
-   */
-  patternProperties?: {[pattern: string]: JsonSchemaUI};
-  /**
-   * If the key is present as a property then the
-   * string of properties must also be present.
-   * If the value is a JSON Schema then it must
-   * also be valid for the object if the key is
-   * present.
-   */
-  dependencies?: {[key: string]: JsonSchemaUI | string[]};
+/**
+* This attribute defines the allowed items in an instance array, and
+* MUST be a schema or an array of schemas.  The default value is an
+* empty schema which allows any value for items in the instance array.
+*
+* When this attribute value is a schema and the instance value is an
+* array, then all the items in the array MUST be valid according to the
+* schema.
+*
+* When this attribute value is an array of schemas and the instance
+* value is an array, each position in the instance array MUST conform
+* to the schema in the corresponding position for this array.  This
+* called tuple typing.  When tuple typing is used, additional items are
+* allowed, disallowed, or constrained by the "additionalItems"
+* (Section 5.6) attribute using the same rules as
+* "additionalProperties" (Section 5.4) for objects.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.5
+*/
+items?: JSONSchema4 | JSONSchema4[]
 
-  /////////////////////////////////////////////////
-  // Generic
-  /////////////////////////////////////////////////
-  /**
-   * Enumerates the values that this schema can be
-   * e.g.
-   * {"type": "string",
-     *  "enum": ["red", "green", "blue"]}
-   */
-  'enum'?: any[];
-  /**
-   * The basic type of this schema, can be one of
-   * [string, number, object, array, boolean, null]
-   * or an array of the acceptable types
-   */
-  type?: string | string[];
-  readonly?: boolean;
-  readOnly?: boolean;
-  titleMap?: Array<Object>;
-  schema?: JsonSchemaUI;
-  templateUrl?: string;
-  template?: string;
+maxItems?: number
+minItems?: number
+uniqueItems?: boolean
+maxProperties?: number
+minProperties?: number
 
-  /////////////////////////////////////////////////
-  // Combining Schemas
-  /////////////////////////////////////////////////
-  allOf?: JsonSchemaUI[];
-  anyOf?: JsonSchemaUI[];
-  oneOf?: JsonSchemaUI[];
-  /**
-   * The entity being validated must not match this schema
-   */
-  not?: JsonSchemaUI;
+/**
+* This attribute indicates if the instance must have a value, and not
+* be undefined. This is false by default, making the instance
+* optional.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.7
+*/
+required?: false | string[]
+
+/**
+* This attribute defines a schema for all properties that are not
+* explicitly defined in an object type definition. If specified, the
+* value MUST be a schema or a boolean. If false is provided, no
+* additional properties are allowed beyond the properties defined in
+* the schema. The default value is an empty schema which allows any
+* value for additional properties.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.4
+*/
+additionalProperties?: boolean | JSONSchema4
+
+definitions?: {
+[k: string]: JSONSchema4
+}
+
+/**
+* This attribute is an object with property definitions that define the
+* valid values of instance object property values. When the instance
+* value is an object, the property values of the instance object MUST
+* conform to the property definitions in this object. In this object,
+* each property definition's value MUST be a schema, and the property's
+* name MUST be the name of the instance property that it defines.  The
+* instance property value MUST be valid according to the schema from
+* the property definition. Properties are considered unordered, the
+* order of the instance properties MAY be in any order.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.2
+*/
+properties?: {
+[k: string]: JSONSchema4
+}
+
+/**
+* This attribute is an object that defines the schema for a set of
+* property names of an object instance. The name of each property of
+* this attribute's object is a regular expression pattern in the ECMA
+* 262/Perl 5 format, while the value is a schema. If the pattern
+* matches the name of a property on the instance object, the value of
+* the instance's property MUST be valid against the pattern name's
+* schema value.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.3
+*/
+patternProperties?: {
+[k: string]: JSONSchema4
+}
+dependencies?: {
+[k: string]: JSONSchema4 | string[]
+}
+
+/**
+* This provides an enumeration of all possible values that are valid
+* for the instance property. This MUST be an array, and each item in
+* the array represents a possible value for the instance value. If
+* this attribute is defined, the instance value MUST be one of the
+* values in the array in order for the schema to be valid.
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.19
+*/
+enum?: JSONSchema4Type[]
+
+/**
+* A single type, or a union of simple types
+*/
+type?: JSONSchema4TypeName | JSONSchema4TypeName[] | string | string[]
+
+allOf?: JSONSchema4[]
+anyOf?: JSONSchema4[]
+oneOf?: JSONSchema4[]
+not?: JSONSchema4
+
+/**
+* The value of this property MUST be another schema which will provide
+* a base schema which the current schema will inherit from.  The
+* inheritance rules are such that any instance that is valid according
+* to the current schema MUST be valid according to the referenced
+* schema.  This MAY also be an array, in which case, the instance MUST
+* be valid for all the schemas in the array.  A schema that extends
+* another schema MAY define additional attributes, constrain existing
+* attributes, or add other constraints.
+*
+* Conceptually, the behavior of extends can be seen as validating an
+* instance against all constraints in the extending schema as well as
+* the extended schema(s).
+*
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.26
+*/
+extends?: string | string[]
+
+/**
+* @see https://tools.ietf.org/html/draft-zyp-json-schema-04#section-5.6
+*/
+[k: string]: any
+}
+
+export interface JSONSchema6 extends JSONSchema4 {
+}
+
+export interface JSONSchema7 extends JSONSchema6 {
+}
+
+export interface JSONSchema8 extends JSONSchema7 {
+}
+
+export interface JSONSchema extends JSONSchema8 {
+}
+
+export interface JSONSchemaUI extends JSONSchema {
+  items?: JSONSchema | JSONSchema[] | JSONSchemaUI | JSONSchemaUI[]
 }

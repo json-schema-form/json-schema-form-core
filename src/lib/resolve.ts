@@ -1,4 +1,4 @@
-import { JsonSchemaUI } from '../json-schema-ui';
+import { JSONSchemaUI } from '../json-schema-ui';
 import * as JsonRefs from 'json-refs';
 
 /**
@@ -6,7 +6,7 @@ import * as JsonRefs from 'json-refs';
  * @param {Object} schema
  * @param {function} callBack
  */
-export function jsonref(schema: JsonSchemaUI, callBack?: Function) {
+export function jsonref(schema: JSONSchemaUI, callBack?: Function) {
   let promise: Promise<{}> = new Promise(
     function(resolve, reject) {
       JsonRefs.resolveRefs(schema, {

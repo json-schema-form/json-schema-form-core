@@ -1,8 +1,8 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { jsonref } from './resolve';
+/* tslint:disable:quotemark */
+import { should } from 'chai';
+import { jsonref } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('resolve.js', () => {
   const schema = {
@@ -97,7 +97,7 @@ describe('resolve.js', () => {
 
     it('should resolve relative json-ref via promise', (done) => {
       jsonref(schema)
-        .then((resolved) => {
+        .then((resolved: any) => {
           resolved.properties.storage.oneOf[0].properties.should.have.property('device');
           resolved.properties.storage.oneOf[0].properties.should.equal(
             resolved.definitions.diskDevice.properties
@@ -114,17 +114,23 @@ describe('resolve.js', () => {
 
     it('should resolve relative json-ref via callback', (done) => {
       jsonref(schema, function(error, resolved) {
-        if (error) done(error);
+        if (error) {
+          done(error);
+        }
+
         resolved.properties.storage.oneOf[0].properties.should.have.property('device');
         done();
       });
     });
 
-    //I believe this only fails in phantomjs due to https://github.com/ariya/phantomjs/issues/11195
+    // I believe this only fails in phantomjs due to https://github.com/ariya/phantomjs/issues/11195
     it('should resolve remote json-ref via callback', (done) => {
       jsonref(remote, function(error, resolved) {
-        if (error) done(error);
-        //resolved.properties.relative.latitude.type.should.equal('number');
+        if (error) {
+          done(error);
+        }
+
+        // resolved.properties.relative.latitude.type.should.equal('number');
         done();
       });
     });

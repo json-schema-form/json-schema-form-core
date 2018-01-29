@@ -1,8 +1,7 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { traverseSchema, traverseForm } from './traverse';
+import { should } from 'chai';
+import { traverseSchema, traverseForm } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('traverse.js', () => {
   it('should hold functions for applying functions on branches of a json-schema or ui-schema', () => {

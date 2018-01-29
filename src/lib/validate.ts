@@ -50,5 +50,12 @@ export function validate(form, value) {
   };
 
   Validator.addSchema(key, wrap);
-  return Validator.test(key, valueWrap);
+  let valid = Validator.validate(key, valueWrap);
+  let error = Validator.getErrors();
+  let result = {
+    valid: valid,
+    error: error[0],
+    errors: error
+  }
+  return result;
 };

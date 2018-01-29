@@ -1,9 +1,10 @@
-import chai from 'chai';
+/* tslint:disable:quotemark */
+import { should } from 'chai';
 import { describe, it} from 'mocha';
-import { defaultForm, createDefaults } from './schema-defaults';
-import { merge } from './merge';
+import { merge, schemaDefaults } from '../dist/package/Core';
+import { JSONSchemaUI } from '../dist/src/json-schema-ui';
 
-chai.should();
+should();
 
 // describe('merge.js', () => {
 //   it('should hold functions for generating a default form schema from defaults it creates', () => {
@@ -20,7 +21,7 @@ chai.should();
 // });
 
 describe('merge.js', () => {
-  const schema = {
+  const schema: JSONSchemaUI = {
     "type": "object",
     "properties": {
       "name": {
@@ -35,7 +36,7 @@ describe('merge.js', () => {
         "items": {
           "type": "object",
           "properties": {
-            "brand": {"type":"string"}
+            "brand": { "type": "string" }
           }
         }
       },
@@ -52,7 +53,7 @@ describe('merge.js', () => {
     }
   };
 
-  const stdForm = defaultForm(schema, createDefaults());
+  const stdForm = schemaDefaults.defaultForm(schema, schemaDefaults.createDefaults());
 
   it('should contain a function for merging schema and form definitions', () => {
     merge.should.be.an('function');
@@ -83,16 +84,16 @@ describe('merge.js', () => {
     it('should combine a schema and form definition, regardless of order', () => {
       merge(schema, [ 'name', 'shoe', 'gender' ]).should.be.deep.equal(stdForm.form);
       merge(schema, [ 'gender' ]).should.be.deep.equal([stdForm.form[2]]);
-      merge(schema, [ 'gender', 'name' ]).should.be.deep.equal([stdForm.form[2],stdForm.form[0]]);
+      merge(schema, [ 'gender', 'name' ]).should.be.deep.equal([stdForm.form[2], stdForm.form[0]]);
     });
 
 
     it('should allow items that are not in the schema', () => {
-      merge(schema, [ '*', { type:'fieldset' }]).should.be.deep.equal(stdForm.form.concat([{ type:'fieldset' }]));
+      merge(schema, [ '*', { type: 'fieldset' }]).should.be.deep.equal(stdForm.form.concat([{ type: 'fieldset' }]));
     });
 
     it('should translate "readOnly" in schema to "readonly" on the merged form defintion', () => {
-      var merged = merge(schema, [ 'gender' ]);
+      let merged = merge(schema, [ 'gender' ]);
       merged[0].should.have.property('readonly');
       merged[0].readonly.should.eq(true)
     });
@@ -121,17 +122,17 @@ describe('merge.js', () => {
         }
       };
 
-      var merged = merge(subschema, [ '*' ]);
+      let merged = merge(subschema, [ '*' ]);
 
-      //sub
+      // sub
       merged[0].should.have.property('readonly');
       merged[0].readonly.should.eq(true);
 
-      //array
+      // array
       merged[0].items[0].should.have.property('readonly');
       merged[0].items[0].readonly.should.eq(true);
 
-      //array items
+      // array items
       merged[0].items[0].items[0].should.have.property('readonly');
       merged[0].items[0].items[0].readonly.should.eq(true);
     });
@@ -159,7 +160,7 @@ describe('merge.js', () => {
         }
       };
 
-      var merged = merge(subschema, [{key: 'sub', readonly: true}]);
+      let merged = merge(subschema, [{key: 'sub', readonly: true}]);
 
       // sub
       merged[0].should.have.property('readonly');
@@ -189,7 +190,7 @@ describe('merge.js', () => {
         }
       };
 
-      var merged = merge(subschema, [ '*' ]);
+      let merged = merge(subschema, [ '*' ]);
 
       merged.should.deep.eq(
         [
@@ -197,7 +198,7 @@ describe('merge.js', () => {
             "title": "Comment",
             "schema": {
               "type": "string",
-              "title":"Comment",
+              "title": "Comment",
               "x-schema-form": {
                 "type": "textarea",
                 "placeholder": "Don't hold back"

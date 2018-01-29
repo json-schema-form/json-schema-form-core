@@ -1,18 +1,17 @@
-import chai from 'chai';
-import { describe, it} from 'mocha';
-import { defaultForm, createDefaults } from './schema-defaults';
+import { should } from 'chai';
+import { schemaDefaults } from '../dist/package/Core';
 
-chai.should();
+should();
 
 describe('schema-defaults.js', () => {
   it('should hold functions for generating a default form schema from defaults it creates', () => {
-    defaultForm.should.be.an('function');
-    createDefaults.should.be.an('function');
+    schemaDefaults.defaultForm.should.be.an('function');
+    schemaDefaults.createDefaults.should.be.an('function');
   });
 
   describe('createDefaults', () => {
     it('should create default rules', () => {
-      const rules = createDefaults();
+      const rules = schemaDefaults.createDefaults();
       rules.should.be.an('object');
     });
   });
@@ -235,7 +234,7 @@ describe('schema-defaults.js', () => {
         }
       ];
 
-      const f = defaultForm(schema, createDefaults());
+      const f = schemaDefaults.defaultForm(schema, schemaDefaults.createDefaults());
       f.form.should.be.deep.equal(form);
     });
   });
