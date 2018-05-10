@@ -9,7 +9,7 @@ import { Validator } from '@jsonschema/assimilate';
  * @param {any} value the value to validate.
  * @return {Object} a tv4js result object.
  */
-export function validate(form, value) {
+function validate(form, value) {
   if (!form) {
     return { valid: true };
   };
@@ -59,3 +59,5 @@ export function validate(form, value) {
   }
   return result;
 };
+
+export { validate };

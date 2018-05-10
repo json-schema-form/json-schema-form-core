@@ -1,5 +1,5 @@
 import { JSONSchemaUI } from '../json-schema-ui';
-import * as JsonRefs from 'json-refs';
+import * as JsonRefs from '@ext/json-refs';
 
 /**
  * @name jsonref
@@ -22,5 +22,6 @@ export function jsonref(schema: JSONSchemaUI, callBack?: Function) {
       .then((resolved) => { callBack(null, resolved); })
       .catch((error) => { callBack(error); });
   }
+
   return promise;
 };

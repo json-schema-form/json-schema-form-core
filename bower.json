@@ -19,8 +19,5 @@
     "index.js",
     "package.json",
     "docs"
-  ],
-  "devDependencies": {
-    "json-refs": "2.1.6"
-  }
+  ]
 }

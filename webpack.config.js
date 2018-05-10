@@ -35,7 +35,8 @@ module.exports = {
     modules: [
       path.join(__dirname, "src"),
       path.join(__dirname, "src/lib"),
-      "node_modules"
+      path.join(__dirname, 'src', 'ext'),
+      "node_modules",
     ],
     extensions: [ '.ts', '.js' ]
   },

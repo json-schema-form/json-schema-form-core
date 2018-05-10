@@ -85,7 +85,7 @@ describe('resolve.js', () => {
     "description": "test remote schema resolution",
     "type": "object",
     "properties": {
-      "relative": { "$ref": "https://raw.githubusercontent.com/json-schema-org/json-schema-org.github.io/master/geo" }
+      "relative": { "$ref": "http://json-schema.org/example/geo.json" }
     }
   };
 

@@ -15,7 +15,6 @@
     ],
     "mapRoot": "./",
     "module": "commonjs",
-    "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -28,13 +27,31 @@
     "typeRoots": [
       "../node_modules/@types",
       "./node_modules/@types",
+      "../node_modules/@jsonschema",
       "./node_modules/@jsonschema"
     ],
     "baseUrl": ".", // This must be specified if "paths" is.
     "paths": {
-      "@jsonschema/assimilate": [ "../assimilate", "./node_modules/@jsonschema/assimilate" ]
+      "@jsonschema/*": [
+        "./../*",
+        "./../../../../*",
+        "./node_modules/@jsonschema/*"
+      ],
+      "@ext/*": [
+        "./dist/src/ext/*",
+        "./../src/ext/*",
+        "./../../src/ext/*",
+        "./ext/*"
+      ]
     }
   },
+  "exclude": [
+    "@ext/*",
+    "./dist/src/ext/*",
+    "./../src/ext/*",
+    "./../../src/ext/*",
+    "./ext/*"
+  ],
   "formatCodeOptions": {
     "indentSize": 2,
     "tabSize": 2
